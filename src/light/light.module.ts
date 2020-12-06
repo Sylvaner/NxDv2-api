@@ -8,7 +8,7 @@ import { LightSchema } from './schemas/light.schema';
   imports: [
     MongooseModule.forFeature([
       { name: 'Light', schema: LightSchema }
-    ])
+    ], 'nextdom')
   ],
   controllers: [LightController],
   providers: [LightService]
