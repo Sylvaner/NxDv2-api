@@ -7,10 +7,10 @@ import { LightStateSchema } from './schemas/lightState.schema';
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: 'LightState', schema: LightStateSchema }
+      { name: 'LightState', schema: LightStateSchema, collection: 'states' }
     ], 'nextdomstate')
   ],
   controllers: [LightStateController],
   providers: [LightStateService]
 })
-export class LightModule { }
+export class LightStateModule { }

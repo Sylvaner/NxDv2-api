@@ -7,13 +7,8 @@ import { LightState } from './interfaces/lightState.interface';
 export class LightStateService {
   constructor(@InjectModel('LightState') private readonly lightStateModel: Model<LightState>) { }
 
-  async findAll(): Promise<LightState[]> {
-    const lights = await this.lightStateModel.find();
-    return lights
-  }
-
-  async findById(lightId: string): Promise<LightState> {
-    const light = await this.lightStateModel.findOne({ id: lightId });
-    return light;
+  async findByObjectId(lightId: string): Promise<LightState> {
+    const lightState = await this.lightStateModel.findOne({ objectId: lightId });
+    return lightState;
   }
 }

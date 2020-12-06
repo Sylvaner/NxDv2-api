@@ -1,15 +1,15 @@
 import { Controller, Get, HttpStatus, Param, Res } from '@nestjs/common';
 import { LightStateService } from './lightState.service';
 
-@Controller('light/state')
+@Controller('light')
 export class LightStateController {
   constructor(private lightStateService: LightStateService) { }
 
-  @Get('/')
-  async findAll(@Res() res) {
-    const lights = await this.lightStateService.findAll();
+  @Get('/:lightId/state')
+  async findById(@Res() res, @Param() params) {
+    const lightState = await this.lightStateService.findByObjectId(params.lightId);
     return res.status(HttpStatus.OK).json(
-      lights
+      lightState
     )
   }
 }
