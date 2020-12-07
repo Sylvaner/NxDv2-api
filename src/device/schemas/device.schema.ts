@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 
-export const LightStateSchema = new Schema({
+export const DeviceSchema = new Schema({
   id: {
     type: String,
     required: true
@@ -9,4 +9,8 @@ export const LightStateSchema = new Schema({
     type: String,
     required: true
   },
+  capabilities: {
+    type: Object,
+    required: true
+  }
 });

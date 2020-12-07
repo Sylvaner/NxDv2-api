@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { LightModule } from './light/light.module';
-import { LightStateModule } from './lightstate/lightState.module';
+import { DeviceModule } from './device/device.module';
+import { DeviceStateModule } from './devicestate/deviceState.module';
 import { configService } from './config/config.service';
 
 @Module({
   imports: [
-    LightModule,
-    LightStateModule,
+    DeviceModule,
+    DeviceStateModule,
     configService.getMongooseModule('nextdom'),
     configService.getMongooseModule('nextdomstate')
   ],

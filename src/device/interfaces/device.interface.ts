@@ -17,7 +17,7 @@ interface Capabilities {
   [capabilityName: string]: CapabilityAccessor
 }
 
-export interface Light extends Document {
+export interface Device extends Document {
   id: string,
   name: string,
   capabilities: Capabilities

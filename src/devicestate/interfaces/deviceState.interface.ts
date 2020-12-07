@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 
-export interface LightState extends Document {
+export interface DeviceState extends Document {
   id: string,
   name: string,
 }
