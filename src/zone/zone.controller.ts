@@ -19,12 +19,13 @@ export class ZoneController {
   @Get('/:zoneId')
   async findById(@Res() res, @Param('zoneId') zoneId) {
     const zone = await this.zoneService.findById(zoneId);
+    if (!zone) throw new NotFoundException(zoneId);
     return res.status(HttpStatus.OK).json(
       zone
     )
   }
 
-  @Post('/create')
+  @Post('/')
   async create(@Res() res, @Body() createZoneDTO: CreateZoneDTO) {
     const zone = await this.zoneService.create(createZoneDTO);
     return res.status(HttpStatus.OK).json(

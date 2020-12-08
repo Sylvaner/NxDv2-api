@@ -20,5 +20,6 @@ interface Capabilities {
 export interface Device extends Document {
   id: string,
   name: string,
-  capabilities: Capabilities
+  capabilities: Capabilities,
+  zone: string
 }

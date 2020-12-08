@@ -12,5 +12,9 @@ export const DeviceSchema = new Schema({
   capabilities: {
     type: Object,
     required: true
+  },
+  zone: {
+    type: String,
+    required: false
   }
 });

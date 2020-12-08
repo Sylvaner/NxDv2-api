@@ -16,4 +16,9 @@ export class DeviceService {
     const device = await this.deviceModel.findOne({ id: deviceId });
     return device;
   }
+
+  async linkToZone(deviceId: string, zoneId: string): Promise<Device> {
+    const device = await this.deviceModel.findOneAndUpdate({ id: deviceId }, { $set: { zone: zoneId } })
+    return device;
+  }
 }
