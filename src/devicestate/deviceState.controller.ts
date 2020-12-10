@@ -8,8 +8,8 @@ export class DeviceStateController {
   constructor(private deviceStateService: DeviceStateService) { }
 
   @Get('/:deviceId/state')
-  async findById(@Res() res, @Param() params) {
-    const deviceState = await this.deviceStateService.findByObjectId(params.deviceId);
+  async findById(@Res() res, @Param('deviceId') deviceId) {
+    const deviceState = await this.deviceStateService.findByObjectId(deviceId);
     return res.status(HttpStatus.OK).json(
       deviceState
     )

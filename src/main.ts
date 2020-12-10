@@ -1,12 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import NodeRedConnector from './services/NodeRedConnector';
 
 /**
  * DEBUG MODE
  */
 //import * as mongoose from 'mongoose';
 //mongoose.set('debug', true);
+
+NodeRedConnector.getInstance().connect('http://localhost:1880')
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
