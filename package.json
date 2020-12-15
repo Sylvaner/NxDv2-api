@@ -28,6 +28,7 @@
     "@nestjs/swagger": "^4.7.5",
     "dotenv": "^8.2.0",
     "mongoose": "^5.10.19",
+    "nest-mqtt": "^0.1.6",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.3",

@@ -2,14 +2,14 @@ import { Document } from 'mongoose';
 
 type MqttFormat = 'raw' | 'json';
 
-class MqttAccessDesc {
+export class MqttAccessDesc {
   topic: string = '';
   path: string = '';
   format?: MqttFormat = 'raw';
   type: string = '';
 }
 
-interface CapabilityAccessor {
+export interface CapabilityAccessor {
   get?: MqttAccessDesc,
   set?: MqttAccessDesc
 }

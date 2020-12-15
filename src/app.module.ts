@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { MqttModule } from 'nest-mqtt';
 import { DeviceModule } from './device/device.module';
 import { DeviceStateModule } from './devicestate/deviceState.module';
 import { ScenarioModule } from './scenario/scenario.module';
@@ -12,7 +13,8 @@ import { configService } from './config/config.service';
     ScenarioModule,
     ZoneModule,
     configService.getMongooseModule('nextdom'),
-    configService.getMongooseModule('nextdomstate')
+    configService.getMongooseModule('nextdomstate'),
+    MqttModule.forRoot(configService.getMqttConfig())
   ],
   controllers: [],
   providers: [],

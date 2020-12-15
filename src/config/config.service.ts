@@ -2,6 +2,7 @@ import { DynamicModule } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
+import { MqttModuleOptions } from "nest-mqtt";
 
 class ConfigService {
   constructor(private env: { [k: string]: string | undefined }) { }
@@ -30,6 +31,14 @@ class ConfigService {
         connectionName
       });
   }
+
+  public getMqttConfig(): MqttModuleOptions {
+    return {
+      host: this.getValue('MQTT_HOST'),
+      username: this.getValue('MQTT_USER'),
+      password: this.getValue('MQTT_PASSWORD')
+    }
+  }
 }
 
 const envContent = dotenv.parse(fs.readFileSync('.env'));
@@ -40,7 +49,10 @@ const configService = new ConfigService(envContent)
     'DB_USER',
     'DB_PASSWORD',
     'DB_DATABASE',
-    'DB_STATE_DATABASE'
+    'DB_STATE_DATABASE',
+    'MQTT_HOST',
+    'MQTT_USER',
+    'MQTT_PASSWORD'
   ]);
 
 export { configService };
