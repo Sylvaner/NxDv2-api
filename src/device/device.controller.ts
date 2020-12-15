@@ -16,7 +16,7 @@ export class DeviceController {
   }
 
   @Get('/:deviceId')
-  async findById(@Res() res, @Param('deviceId') deviceId) {
+  async findById(@Res() res, @Param('deviceId') deviceId: string) {
     const device = await this.deviceService.findById(deviceId);
     if (!device) throw new NotFoundException(device);
     return res.status(HttpStatus.OK).json(

@@ -5,7 +5,7 @@ export const DeviceStateSchema = new Schema({
     type: String,
     required: true
   },
-  name: {
+  date: {
     type: String,
     required: true
   },
