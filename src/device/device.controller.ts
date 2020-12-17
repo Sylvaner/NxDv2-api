@@ -36,11 +36,18 @@ export class DeviceController {
   }
 
   @Post('/:deviceId/action/:capability/:value')
-  async action(@Res() res, @Param('deviceId') deviceId: string, @Param('capability') capability: string, @Param('value') value: string) {
+  async action(@Res() res, @Param('deviceId') deviceId: string, @Param('capability') capability: string, @Param('value') value: any) {
     const device = await this.deviceService.findById(deviceId);
     try {
       const capabilityAccessor: MqttAccessDesc = device.capabilities[capability].set;
       const message = {};
+      if (capabilityAccessor.type === 'boolean') {
+        if (value === 'true') {
+          value = true;
+        } else if (value === 'false') {
+          value = false;
+        }
+      }
       // TODO: Gérer multi niveau dans le path du json
       message[capabilityAccessor.path] = value;
       this.mqttService.publish(capabilityAccessor.topic, message);
