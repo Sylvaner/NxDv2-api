@@ -1,6 +1,7 @@
-import { Controller, Get, HttpStatus, Inject, Injectable, NotFoundException, Param, Post, Put, Res } from '@nestjs/common';
+import { Controller, Get, HttpStatus, Inject, Injectable, NotFoundException, Param, Post, Put, Res, Body } from '@nestjs/common';
 import { DeviceService } from './device.service';
 import { MqttAccessDesc } from './interfaces/device.interface';
+import { UpdateTypeDTO } from './dto/updateType.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { MqttService } from 'nest-mqtt';
 
@@ -27,11 +28,21 @@ export class DeviceController {
   }
 
   @Put('/:deviceId/zone/:zoneId')
-  async linkToSoze(@Res() res, @Param('deviceId') deviceId: string, @Param('zoneId') zoneId: string) {
+  async linkToZone(@Res() res, @Param('deviceId') deviceId: string, @Param('zoneId') zoneId: string) {
     const updatedDevice = await this.deviceService.linkToZone(deviceId, zoneId);
     if (!updatedDevice) throw new NotFoundException(deviceId);
     return res.status(HttpStatus.OK).json(
       updatedDevice
+    );
+  }
+
+  @Post('/:deviceId/category')
+  async update(@Res() res, @Param('deviceId') deviceId: string, @Body() updateTypeDTO: UpdateTypeDTO) {
+    const updatedDevice = await this.deviceService.updateType(deviceId, updateTypeDTO);
+    if (!updatedDevice) throw new NotFoundException(deviceId);
+    console.log(updatedDevice);
+    return res.status(HttpStatus.OK).json(
+        updatedDevice
     );
   }
 

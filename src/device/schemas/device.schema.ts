@@ -16,5 +16,13 @@ export const DeviceSchema = new Schema({
   zone: {
     type: String,
     required: false
+  },
+  category: {
+    type: String,
+    required: false
+  },
+  config: {
+    type: Object,
+    required: false
   }
 });

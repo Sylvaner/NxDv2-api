@@ -23,4 +23,5 @@ export interface Device extends Document {
   name: string,
   capabilities: Capabilities,
   zone: string
+  config: object
 }

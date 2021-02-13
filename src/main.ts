@@ -2,13 +2,13 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import NodeRedConnector from './services/NodeRedConnector';
+import * as mongoose from 'mongoose';
 
 /**
  * DEBUG MODE
  */
-//import * as mongoose from 'mongoose';
 //mongoose.set('debug', true);
-
+mongoose.set('useFindAndModify', false);
 NodeRedConnector.getInstance().connect('http://localhost:1880')
 
 async function bootstrap() {

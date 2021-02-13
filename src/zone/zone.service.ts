@@ -24,7 +24,7 @@ export class ZoneService {
   }
 
   async delete(zoneId: string): Promise<Zone> {
-    const deletedZone = await new this.zoneModel.findByIdAndDelete(zoneId);
+    const deletedZone = await this.zoneModel.findByIdAndDelete(zoneId);
     return deletedZone
   }
 
