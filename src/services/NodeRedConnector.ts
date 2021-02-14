@@ -191,25 +191,33 @@ export default class NodeRedConnector {
       createScenarioDto.triggerCapability.name +
       createScenarioDto.triggerCondition +
       createScenarioDto.triggerValue;
-    flow[1].property =
-      'payload.' + createScenarioDto.triggerCapability.capabilityData.get.path;
+    if (createScenarioDto.triggerCapability.capabilityData.get.format === 'json') {
+      flow[1].property =
+          'payload.' + createScenarioDto.triggerCapability.capabilityData.get.path;
+    } else {
+      flow[1].property = 'payload';
+    }
     flow[1].rules.push(
       this.getSwitchConditionCode(
         createScenarioDto.triggerCondition,
         createScenarioDto.triggerValue,
       ),
     );
-
     flow[2].name =
-      createScenarioDto.actionCapability.name +
-      ': ' +
-      createScenarioDto.actionValue;
-    flow[2].template =
-      '{\n  "' +
-      createScenarioDto.actionCapability.capabilityData.set.path +
-      '": ' +
-      createScenarioDto.actionValue +
-      '\n}';
+        createScenarioDto.actionCapability.name +
+        ': ' +
+        createScenarioDto.actionValue;
+    if (createScenarioDto.actionCapability.capabilityData.set.format === 'json') {
+      flow[2].template =
+          '{\n  "' +
+          createScenarioDto.actionCapability.capabilityData.set.path +
+          '": ' +
+          createScenarioDto.actionValue +
+          '\n}';
+    } else {
+      flow[2].template = createScenarioDto.actionValue;
+      flow[2].syntax = 'plan';
+    }
     flow[3].name = createScenarioDto.actionDevice;
     flow[3].topic = createScenarioDto.actionCapability.capabilityData.set.topic;
     flow[3].broker = MQTT_NODE_ID;
