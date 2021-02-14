@@ -39,6 +39,13 @@ class ConfigService {
       password: this.getValue('MQTT_PASSWORD')
     }
   }
+
+  public getNodeRedConfig() {
+      return {
+          host: this.getValue('NODERED_HOST'),
+          port: this.getValue('NODERED_PORT')
+      }
+  }
 }
 
 const envContent = dotenv.parse(fs.readFileSync('.env'));

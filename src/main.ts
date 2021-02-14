@@ -3,13 +3,16 @@ import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import NodeRedConnector from './services/NodeRedConnector';
 import * as mongoose from 'mongoose';
+import { configService } from './config/config.service';
 
 /**
  * DEBUG MODE
  */
 //mongoose.set('debug', true);
 mongoose.set('useFindAndModify', false);
-NodeRedConnector.getInstance().connect('http://localhost:1880')
+
+const nodeRedConfig = configService.getNodeRedConfig();
+NodeRedConnector.getInstance().connect(`http://${nodeRedConfig.host}:${nodeRedConfig.port}`)
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
