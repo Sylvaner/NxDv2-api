@@ -1,7 +1,7 @@
 import { Controller, Get, HttpStatus, Inject, Injectable, NotFoundException, Param, Post, Put, Res, Body } from '@nestjs/common';
 import { DeviceService } from './device.service';
 import { MqttAccessDesc } from './interfaces/device.interface';
-import { UpdateTypeDTO } from './dto/updateType.dto';
+import { UpdateCategoryDTO } from './dto/updateCategory';
 import { ApiTags } from '@nestjs/swagger';
 import { MqttService } from 'nest-mqtt';
 
@@ -37,10 +37,9 @@ export class DeviceController {
   }
 
   @Post('/:deviceId/category')
-  async update(@Res() res, @Param('deviceId') deviceId: string, @Body() updateTypeDTO: UpdateTypeDTO) {
+  async update(@Res() res, @Param('deviceId') deviceId: string, @Body() updateTypeDTO: UpdateCategoryDTO) {
     const updatedDevice = await this.deviceService.updateType(deviceId, updateTypeDTO);
     if (!updatedDevice) throw new NotFoundException(deviceId);
-    console.log(updatedDevice);
     return res.status(HttpStatus.OK).json(
         updatedDevice
     );
@@ -51,7 +50,6 @@ export class DeviceController {
     const device = await this.deviceService.findById(deviceId);
     try {
       const capabilityAccessor: MqttAccessDesc = device.capabilities[capability].set;
-      const message = {};
       if (capabilityAccessor.type === 'boolean') {
         if (value === 'true') {
           value = true;
@@ -59,8 +57,13 @@ export class DeviceController {
           value = false;
         }
       }
+      let message = null;
+      if (capabilityAccessor.format === 'raw') {
+        message = value.toString();
+      } else {
       // TODO: Gérer multi niveau dans le path du json
-      message[capabilityAccessor.path] = value;
+        message[capabilityAccessor.path] = value;
+      }
       this.mqttService.publish(capabilityAccessor.topic, message);
       return res.status(HttpStatus.OK).json(
         message
