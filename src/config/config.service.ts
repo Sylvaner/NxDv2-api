@@ -48,7 +48,17 @@ class ConfigService {
   }
 }
 
-const envContent = dotenv.parse(fs.readFileSync('.env'));
+function parseConfigFile() {
+  if (fs.existsSync(`${__dirname}/.env`)) {
+    return dotenv.parse(fs.readFileSync(`${__dirname}/.env`));
+  } else if (fs.existsSync(`${__dirname}/../.env`)) {
+    return dotenv.parse(fs.readFileSync(`${__dirname}/../.env`));
+  } else if (fs.existsSync('/etc/nextdom/nextdom.conf')) {
+    return dotenv.parse(fs.readFileSync('/etc/nextdom/nextdom.conf'));
+  }
+}
+
+const envContent = parseConfigFile();
 const configService = new ConfigService(envContent)
   .ensureValues([
     'DB_HOST',
@@ -59,7 +69,9 @@ const configService = new ConfigService(envContent)
     'DB_STATE_DATABASE',
     'MQTT_HOST',
     'MQTT_USER',
-    'MQTT_PASSWORD'
+    'MQTT_PASSWORD',
+    'NODERED_HOST',
+    'NODERED_PORT'
   ]);
 
 export { configService };

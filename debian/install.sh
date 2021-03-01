@@ -28,6 +28,7 @@ fi
 echo ">>> Copy application files"
 mkdir -p $DEST_FOLDER
 cp -fr ../dist/* $DEST_FOLDER/
+cp -fr ../node_modules $DEST_FOLDER/
 chown nextdom:nextdom -R $DEST_FOLDER
 
 if [ -x "$(command -v systemctl)" ]; then
