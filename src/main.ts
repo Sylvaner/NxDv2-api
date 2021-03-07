@@ -16,6 +16,7 @@ NodeRedConnector.getInstance().connect(`http://${nodeRedConfig.host}:${nodeRedCo
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.setGlobalPrefix('/api');
   const options = new DocumentBuilder()
     .setTitle('NextDom API')
     .setDescription('Description')
@@ -23,7 +24,7 @@ async function bootstrap() {
     .addTag('nextdom')
     .build();
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('/api/doc', app, document);
   await app.listen(3000);
 }
 bootstrap();
