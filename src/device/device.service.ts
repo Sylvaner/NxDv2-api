@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Device } from './interfaces/device.interface';
 import {UpdateCategoryDTO} from "./dto/updateCategory";
+import {UpdateConfigDTO} from "./dto/updateConfig";
 
 @Injectable()
 export class DeviceService {
@@ -20,7 +21,11 @@ export class DeviceService {
     return await this.deviceModel.findOneAndUpdate({ id: deviceId }, { $set: { zone: zoneId } }, {new: true});
   }
 
-  async updateType(deviceId: string, updateCategoryDto: UpdateCategoryDTO): Promise<Device> {
+  async updateCategory(deviceId: string, updateCategoryDto: UpdateCategoryDTO): Promise<Device> {
     return await this.deviceModel.findOneAndUpdate({ id: deviceId }, { $set: updateCategoryDto }, {new: true});
+  }
+
+  async updateConfig(deviceId: string, updateConfigDto: UpdateConfigDTO): Promise<Device> {
+    return await this.deviceModel.findOneAndUpdate({ id: deviceId }, { $set: updateConfigDto }, {new: true});
   }
 }

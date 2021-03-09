@@ -49,11 +49,12 @@ class ConfigService {
 }
 
 function parseConfigFile() {
-  if (fs.existsSync(`${__dirname}/.env`)) {
-    return dotenv.parse(fs.readFileSync(`${__dirname}/.env`));
-  } else if (fs.existsSync(`${__dirname}/../.env`)) {
-    return dotenv.parse(fs.readFileSync(`${__dirname}/../.env`));
+  if (fs.existsSync(`./.env`)) {
+    return dotenv.parse(fs.readFileSync(`./.env`));
+  } else if (fs.existsSync(`../.env`)) {
+    return dotenv.parse(fs.readFileSync(`../.env`));
   } else if (fs.existsSync('/etc/nextdom/nextdom.conf')) {
+    console.log('nextdom.conf');
     return dotenv.parse(fs.readFileSync('/etc/nextdom/nextdom.conf'));
   }
 }

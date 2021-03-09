@@ -2,6 +2,7 @@ import { Controller, Get, HttpStatus, Inject, Injectable, NotFoundException, Par
 import { DeviceService } from './device.service';
 import { MqttAccessDesc } from './interfaces/device.interface';
 import { UpdateCategoryDTO } from './dto/updateCategory';
+import { UpdateConfigDTO } from './dto/updateConfig';
 import { ApiTags } from '@nestjs/swagger';
 import { MqttService } from 'nest-mqtt';
 
@@ -37,8 +38,17 @@ export class DeviceController {
   }
 
   @Post('/:deviceId/category')
-  async update(@Res() res, @Param('deviceId') deviceId: string, @Body() updateTypeDTO: UpdateCategoryDTO) {
-    const updatedDevice = await this.deviceService.updateType(deviceId, updateTypeDTO);
+  async updateCategory(@Res() res, @Param('deviceId') deviceId: string, @Body() updateCategoryDTO: UpdateCategoryDTO) {
+    const updatedDevice = await this.deviceService.updateCategory(deviceId, updateCategoryDTO);
+    if (!updatedDevice) throw new NotFoundException(deviceId);
+    return res.status(HttpStatus.OK).json(
+        updatedDevice
+    );
+  }
+
+  @Post('/:deviceId/config')
+  async updateConfig(@Res() res, @Param('deviceId') deviceId: string, @Body() updateConfigDTO: UpdateConfigDTO) {
+    const updatedDevice = await this.deviceService.updateConfig(deviceId, updateConfigDTO);
     if (!updatedDevice) throw new NotFoundException(deviceId);
     return res.status(HttpStatus.OK).json(
         updatedDevice
