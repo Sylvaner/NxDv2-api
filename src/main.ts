@@ -16,7 +16,7 @@ NodeRedConnector.getInstance().connect(`http://${nodeRedConfig.host}:${nodeRedCo
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.setGlobalPrefix('/api');
+  app.enableCors();
   const options = new DocumentBuilder()
     .setTitle('NextDom API')
     .setDescription('Description')
