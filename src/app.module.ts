@@ -4,6 +4,7 @@ import { DeviceModule } from './device/device.module';
 import { DeviceStateModule } from './devicestate/deviceState.module';
 import { ScenarioModule } from './scenario/scenario.module';
 import { ZoneModule } from './zone/zone.module';
+import { RenderModule } from './render/render.module';
 import { configService } from './config/config.service';
 
 @Module({
@@ -12,6 +13,7 @@ import { configService } from './config/config.service';
     DeviceStateModule,
     ScenarioModule,
     ZoneModule,
+    RenderModule,
     configService.getMongooseModule('nextdom'),
     configService.getMongooseModule('nextdomstate'),
     MqttModule.forRoot(configService.getMqttConfig())
